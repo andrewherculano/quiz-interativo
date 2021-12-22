@@ -5,20 +5,30 @@
 }
 
 body, html {
-    background: #eee;
+    background: #fff;
+}
+
+label {
+    cursor: pointer;
 }
 
 .title {
-    text-align: center;
+    margin: 0;
+    color: #9b4dca;
 }
 
 .page-heading {
-    background: #f9dbbd;
-    padding: 20px;
+    background: #f4f5f6;
+    padding: 10px;
+    border-bottom: solid 1px #b2b3b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
-    margin-top: 10px;
+    margin-top: 50px;
+    padding: 0 50px 0 100px;
 }
 
 .container-form {
@@ -42,4 +52,11 @@ body, html {
 
 .question {
     margin-bottom: 30px;
+}
+
+.submit {
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
