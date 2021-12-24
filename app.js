@@ -3,10 +3,12 @@ const popupAnswers = document.querySelector('.popup-wrapper')
 const answerPopup = document.querySelector('#answer')
 
 const correctAnswers = ['A', 'B', 'B', 'A']
-let score = 0
 
-quizForm.addEventListener('submit', event => {
+const handleSubmitForm = event => {
   event.preventDefault()
+
+  let score = 0
+  let counter = 0
 
   const userAnswers = [
     quizForm.inputQuestion1.value,
@@ -21,13 +23,19 @@ quizForm.addEventListener('submit', event => {
     }
   })
 
-  answerPopup.textContent = `${score}%`
   popupAnswers.style.display = 'block'
 
-  score = 0
-})
+  const timer = setInterval(() => {
+    if (counter === score) {
+      clearInterval(timer)
+    }
 
-popupAnswers.addEventListener('click', event => {
+    answerPopup.textContent = `${counter}%`
+    counter++
+  }, 10)
+}
+
+const closePopup = event => {
   const classNameClickedElement = event.target.classList[0]
   const classNamesToClose = ['popup-close', 'button-continue']
 
@@ -37,4 +45,7 @@ popupAnswers.addEventListener('click', event => {
   if (shouldClosePopup) {
     popupAnswers.style.display = 'none'
   }
-})
+}
+
+quizForm.addEventListener('submit', handleSubmitForm)
+popupAnswers.addEventListener('click', closePopup)
