@@ -1,42 +1,57 @@
 const quizForm = document.querySelector('.quiz-form')
 const popupAnswers = document.querySelector('.popup-wrapper')
-const answerPopup = document.querySelector('#answer')
+const finalScore = document.querySelector('#answer')
 
 const correctAnswers = ['A', 'B', 'B', 'A']
+let score = 0
 
-const handleSubmitForm = event => {
-  event.preventDefault()
+const getUserAnswers = () => {
+  let userAnswers = []
 
-  let score = 0
-  let counter = 0
+  correctAnswers.forEach((_, index) => {
+    const userAnswer = quizForm[`inputQuestion${index + 1}`].value
+    userAnswers.push(userAnswer)
+  })
+  return userAnswers
+}
 
-  const userAnswers = [
-    quizForm.inputQuestion1.value,
-    quizForm.inputQuestion2.value,
-    quizForm.inputQuestion3.value,
-    quizForm.inputQuestion4.value
-  ]
-
+const calculateUserAnswers = (userAnswers) => {
   userAnswers.forEach((answer, index) => {
-    if (answer === correctAnswers[index]) {
+    const isUserAnswerCorrect = answer === correctAnswers[index]
+    if (isUserAnswerCorrect) {
       score += 25
     }
   })
+}
 
+const showPopupScore = () => {
   popupAnswers.style.display = 'block'
+}
 
+const animateFinalScore = () => {
+  let counter = 0
   const timer = setInterval(() => {
     if (counter === score) {
       clearInterval(timer)
     }
 
-    answerPopup.textContent = `${counter}%`
+    finalScore.textContent = `${counter}%`
     counter++
   }, 10)
 }
 
-const closePopup = event => {
-  const classNameClickedElement = event.target.classList[0]
+const handleSubmitForm = event => {
+  event.preventDefault()
+
+  const userAnswers = getUserAnswers()
+
+  calculateUserAnswers(userAnswers)
+  showPopupScore()
+  animateFinalScore()
+}
+
+const closePopup = ({ target }) => {
+  const classNameClickedElement = target.classList[0]
   const classNamesToClose = ['popup-close', 'button-continue']
 
   const shouldClosePopup = classNamesToClose
@@ -45,6 +60,8 @@ const closePopup = event => {
   if (shouldClosePopup) {
     popupAnswers.style.display = 'none'
   }
+
+  score = 0
 }
 
 quizForm.addEventListener('submit', handleSubmitForm)
