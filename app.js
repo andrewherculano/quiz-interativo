@@ -6,12 +6,10 @@ const correctAnswers = ['A', 'B', 'B', 'A']
 let score = 0
 
 const getUserAnswers = () => {
-  let userAnswers = []
-
-  correctAnswers.forEach((_, index) => {
-    const userAnswer = quizForm[`inputQuestion${index + 1}`].value
-    userAnswers.push(userAnswer)
+  const userAnswers = correctAnswers.map((item, index) => {
+    return quizForm[`inputQuestion${index + 1}`].value
   })
+
   return userAnswers
 }
 
